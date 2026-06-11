@@ -1,0 +1,6 @@
+.DS_Store
+.server.pid
+.tools/
+*.log
+server.py
+start_ielts_coach.command

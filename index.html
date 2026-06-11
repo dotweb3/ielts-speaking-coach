@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>IELTS Speaking Coach</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Local IELTS trainer</p>
+          <h1>雅思口语陪练</h1>
+        </div>
+        <div class="topbar-status" aria-live="polite">
+          <span id="serverBadge" class="status-pill">局域网页面</span>
+          <span id="micBadge" class="status-pill muted">麦克风未启用</span>
+          <span id="strictBadge" class="status-pill muted">普通模式</span>
+        </div>
+      </header>
+
+      <nav class="mode-tabs" aria-label="训练模式">
+        <button class="mode-tab active" type="button" data-mode="warmup">3秒开口</button>
+        <button class="mode-tab" type="button" data-mode="part2">Part 2</button>
+        <button class="mode-tab" type="button" data-mode="part3">Part 3</button>
+        <button class="mode-tab" type="button" data-mode="mock">完整模拟</button>
+      </nav>
+
+      <main class="workspace">
+        <aside class="side-panel">
+          <section class="tool-panel plan-panel" aria-labelledby="planTitle">
+            <div class="panel-head">
+              <h2 id="planTitle">今日训练</h2>
+              <button id="resetPlanBtn" class="ghost-btn small" type="button">重置</button>
+            </div>
+            <div class="progress-track" aria-hidden="true">
+              <div id="planProgress" class="progress-fill"></div>
+            </div>
+            <ul id="planList" class="check-list"></ul>
+          </section>
+
+          <section class="tool-panel" aria-labelledby="settingsTitle">
+            <div class="panel-head">
+              <h2 id="settingsTitle">设置</h2>
+            </div>
+            <label class="toggle-row">
+              <input id="strictToggle" type="checkbox">
+              <span>考场模式</span>
+            </label>
+            <label class="toggle-row">
+              <input id="voiceToggle" type="checkbox" checked>
+              <span>考官读题</span>
+            </label>
+            <label class="toggle-row">
+              <input id="autoRecordToggle" type="checkbox" checked>
+              <span>开口自动录音</span>
+            </label>
+            <div class="timer-grid">
+              <label>
+                <span>开口准备</span>
+                <input id="quickPrepInput" type="number" min="0" max="15" value="3">
+              </label>
+              <label>
+                <span>短答秒数</span>
+                <input id="shortSpeakInput" type="number" min="20" max="90" value="45">
+              </label>
+            </div>
+          </section>
+        </aside>
+
+        <section class="practice-surface" aria-labelledby="modeTitle">
+          <div class="surface-head">
+            <div>
+              <p id="modeKicker" class="eyebrow">Warm-up</p>
+              <h2 id="modeTitle">3 秒开口训练</h2>
+            </div>
+            <div id="attemptTag" class="attempt-tag">Attempt 0</div>
+          </div>
+
+          <div class="stats-strip" aria-label="今日统计">
+            <div class="stat-cell">
+              <span>今日题数</span>
+              <strong id="todayAttempts">0</strong>
+            </div>
+            <div class="stat-cell">
+              <span>录音</span>
+              <strong id="todayRecordings">0</strong>
+            </div>
+            <div class="stat-cell">
+              <span>复盘</span>
+              <strong id="todayReviews">0</strong>
+            </div>
+            <div class="stat-cell">
+              <span>稳定指数</span>
+              <strong id="stabilityScore">--</strong>
+            </div>
+          </div>
+
+          <div id="mockStrip" class="mock-strip hidden">
+            <div class="mock-step active">Part 1</div>
+            <div class="mock-step">Part 2</div>
+            <div class="mock-step">Part 3</div>
+          </div>
+
+          <article id="promptCard" class="prompt-card">
+            <div class="prompt-meta">
+              <span id="partLabel">Part 1</span>
+              <span id="timingLabel">3s prep / 45s speak</span>
+            </div>
+            <p id="questionText" class="question-text"></p>
+            <ul id="cueList" class="cue-list hidden"></ul>
+          </article>
+
+          <div class="timer-panel">
+            <div class="timer-readout">
+              <span id="phaseLabel">Ready</span>
+              <strong id="timerText">00:00</strong>
+            </div>
+            <div class="timebar" aria-hidden="true">
+              <div id="timebarFill" class="timebar-fill"></div>
+            </div>
+          </div>
+
+          <div class="control-row">
+            <button id="micBtn" class="secondary-btn" type="button">启用麦克风</button>
+            <button id="newBtn" class="secondary-btn" type="button">换题</button>
+            <button id="startBtn" class="primary-btn" type="button">开始本题</button>
+            <button id="resetBrainBtn" class="secondary-btn" type="button">重启大脑</button>
+            <button id="repeatBtn" class="secondary-btn" type="button">重读题目</button>
+            <button id="stopBtn" class="danger-btn" type="button" disabled>停止</button>
+          </div>
+
+          <div id="coachStatus" class="coach-status" role="status">
+            选一个模式，点击开始。
+          </div>
+
+          <section class="scaffold-panel" aria-labelledby="scaffoldTitle">
+            <div class="panel-head">
+              <h3 id="scaffoldTitle">开口桥</h3>
+            </div>
+            <div id="stemGrid" class="stem-grid"></div>
+          </section>
+        </section>
+
+        <aside class="review-panel">
+          <section class="tool-panel recorder-panel" aria-labelledby="recordingTitle">
+            <div class="panel-head">
+              <h2 id="recordingTitle">录音</h2>
+              <button id="downloadBtn" class="ghost-btn small" type="button" disabled>下载</button>
+            </div>
+            <audio id="audioPlayer" controls></audio>
+            <div class="meter-shell" aria-label="麦克风音量">
+              <div id="meterFill" class="meter-fill"></div>
+            </div>
+            <div id="micDiagnostics" class="mic-diagnostics"></div>
+            <p id="recordingNote" class="small-note">本次开口后会出现回放。</p>
+          </section>
+
+          <section class="tool-panel" aria-labelledby="reviewTitle">
+            <div class="panel-head">
+              <h2 id="reviewTitle">复盘</h2>
+              <button id="saveBtn" class="ghost-btn small" type="button">保存</button>
+            </div>
+            <div class="rubric-list">
+              <label class="rubric-row">
+                <span>流利度</span>
+                <input data-rubric="fluency" type="range" min="1" max="5" value="3">
+                <b id="fluencyValue">3</b>
+              </label>
+              <label class="rubric-row">
+                <span>切题</span>
+                <input data-rubric="relevance" type="range" min="1" max="5" value="3">
+                <b id="relevanceValue">3</b>
+              </label>
+              <label class="rubric-row">
+                <span>展开</span>
+                <input data-rubric="depth" type="range" min="1" max="5" value="3">
+                <b id="depthValue">3</b>
+              </label>
+              <label class="rubric-row">
+                <span>清晰度</span>
+                <input data-rubric="clarity" type="range" min="1" max="5" value="3">
+                <b id="clarityValue">3</b>
+              </label>
+              <label class="rubric-row">
+                <span>紧张值</span>
+                <input data-rubric="panic" type="range" min="1" max="5" value="3">
+                <b id="panicValue">3</b>
+              </label>
+            </div>
+            <div id="noteChips" class="note-chips" aria-label="快速复盘标签">
+              <button type="button" data-note="开头慢">开头慢</button>
+              <button type="button" data-note="中间空白">中间空白</button>
+              <button type="button" data-note="例子少">例子少</button>
+              <button type="button" data-note="答偏">答偏</button>
+              <button type="button" data-note="声音紧">声音紧</button>
+            </div>
+            <textarea id="noteInput" rows="4" placeholder="卡在哪一句？下一次改什么？"></textarea>
+          </section>
+
+          <section class="tool-panel history-panel" aria-labelledby="historyTitle">
+            <div class="panel-head">
+              <h2 id="historyTitle">记录</h2>
+              <div class="mini-actions">
+                <button id="exportBtn" class="ghost-btn small" type="button">导出</button>
+                <button id="importBtn" class="ghost-btn small" type="button">导入</button>
+                <button id="clearHistoryBtn" class="ghost-btn small" type="button">清空</button>
+              </div>
+            </div>
+            <input id="importInput" class="hidden" type="file" accept="application/json">
+            <div id="historyList" class="history-list"></div>
+          </section>
+        </aside>
+      </main>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
