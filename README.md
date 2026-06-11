@@ -4,6 +4,16 @@
 
 ## 打开方式
 
+推荐使用 GitHub Pages 版本，手机和电脑都可以直接打开：
+
+```text
+https://dotweb3.github.io/ielts-speaking-coach/
+```
+
+GitHub Pages 使用 HTTPS，更适合浏览器麦克风录音。
+
+## 本地备用
+
 最简单的方式：双击这个文件并保持弹出的窗口不要关闭。
 
 ```text
@@ -34,6 +44,7 @@ http://192.168.x.x:8080
 
 网页录音不是普通网页权限，它受浏览器安全策略限制：
 
+- 推荐录音地址：`https://dotweb3.github.io/ielts-speaking-coach/`
 - 电脑录音：请打开 `http://localhost:8080`，再点页面里的“启用麦克风”。
 - 手机访问电脑网页：`http://192.168.x.x:8080` 通常不能调用麦克风，所以不会弹授权。
 - 如果电脑用 `192.168.x.x:8080` 打开，也可能不会弹授权；录音请改用 `localhost`。
