@@ -350,6 +350,34 @@ button:disabled {
   width: 100%;
 }
 
+.voice-control {
+  border-top: 1px solid var(--line);
+  display: grid;
+  gap: 8px;
+  grid-template-columns: 1fr auto;
+  padding-top: 12px;
+}
+
+.voice-control label,
+.voice-control .small-note {
+  grid-column: 1 / -1;
+}
+
+.voice-control label {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.voice-control select {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  min-height: 38px;
+  min-width: 0;
+  padding: 0 10px;
+  width: 100%;
+}
+
 .mock-strip {
   display: grid;
   gap: 8px;
@@ -465,6 +493,46 @@ button:disabled {
 .scaffold-panel {
   box-shadow: none;
   padding: 16px;
+}
+
+.reference-panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: none;
+  padding: 16px;
+}
+
+.reference-panel h3 {
+  font-size: 16px;
+  margin: 0;
+}
+
+.answer-grid {
+  display: grid;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.answer-card {
+  background: #f7f9f7;
+  border: 1px solid var(--line);
+  border-left: 5px solid var(--amber);
+  border-radius: 8px;
+  display: grid;
+  gap: 8px;
+  padding: 12px;
+}
+
+.answer-card b {
+  font-size: 13px;
+}
+
+.answer-card p {
+  color: var(--ink);
+  font-size: 14px;
+  line-height: 1.48;
+  margin: 0;
 }
 
 .stem-grid {
@@ -666,6 +734,10 @@ textarea {
 }
 
 .strict .scaffold-panel {
+  display: none;
+}
+
+.strict .reference-panel {
   display: none;
 }
 

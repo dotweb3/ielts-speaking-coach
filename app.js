@@ -149,6 +149,387 @@ const MODE_META = {
   mock: { title: "完整模拟", kicker: "Mock test", source: "mock" }
 };
 
+const REFERENCE_PATTERNS = [
+  {
+    key: "studying alone",
+    answers: [
+      "Generally speaking, I prefer studying alone, especially when I need to understand something difficult. It is easier for me to control the pace and avoid small distractions. That said, if I am preparing for a speaking test or a presentation, studying with another person can be useful because I get immediate feedback.",
+      "I would say it depends on the task. For memorising vocabulary or reading, I work better alone. But for solving problems or practising English speaking, I prefer working with someone else, because the interaction forces me to explain my ideas more clearly."
+    ]
+  },
+  {
+    key: "place do you usually choose",
+    answers: [
+      "I usually choose a quiet corner in a library or at home. I do not need a perfect environment, but I need a place where I can sit for a long time without being interrupted. If my phone is out of reach, I can usually focus much better.",
+      "I tend to choose a place with some background noise, like a cafe, as long as it is not too crowded. A completely silent room sometimes makes me too aware of small sounds, while a mild level of noise helps me settle into the work."
+    ]
+  },
+  {
+    key: "making plans",
+    answers: [
+      "Yes, I like making a simple plan before studying. I do not write a very detailed schedule, but I usually decide what I need to finish first. It makes the task feel smaller and stops me from wasting time deciding what to do next.",
+      "Not always. If the task is small, I just start directly. But before an exam, planning is important for me, because it helps me balance review, practice questions, and rest. Without a plan, I tend to spend too much time on the easiest part."
+    ]
+  },
+  {
+    key: "feel nervous before an exam",
+    answers: [
+      "When I feel nervous before an exam, I try to do something very concrete, like checking my materials or reviewing a short list of common mistakes. It gives my brain a task to focus on instead of just worrying about the result.",
+      "I usually slow down my breathing and remind myself that I only need to answer the next question, not the whole exam at once. That sounds simple, but it helps me stop imagining the worst possible outcome."
+    ]
+  },
+  {
+    key: "paper or on a screen",
+    answers: [
+      "For serious reading, I still prefer paper because it is easier to underline and I get less distracted. Screens are convenient, but notifications and other tabs can easily break my concentration.",
+      "I prefer reading on a screen for daily information because it is fast and searchable. But if I need to remember details, paper feels better. I think the physical layout of a page helps me recall where the information was."
+    ]
+  },
+  {
+    key: "subject you would like",
+    answers: [
+      "I would like to learn more about psychology, especially how people handle stress and pressure. It feels useful because students face a lot of competition, and understanding the mind can help with both study and daily life.",
+      "I would like to learn more about computer science. Even if I do not become a programmer, technology affects almost every field now, so understanding how software works would give me more choices in the future."
+    ]
+  },
+  {
+    key: "English outside school",
+    answers: [
+      "I use English almost every day, mostly through videos, articles, and apps. However, using English passively is much easier than speaking it. That is why I am trying to create more chances to answer questions out loud.",
+      "Outside school, I use English mainly when I search for information online. Many useful resources are in English, so it has become part of my daily routine, even though I still need more practice in real conversations."
+    ]
+  },
+  {
+    key: "talking to new people",
+    answers: [
+      "I like it when the situation is relaxed, but I can feel nervous if I have to make a good impression quickly. Once the conversation starts, I usually become more comfortable, especially if we find a shared topic.",
+      "Not particularly. I am not afraid of new people, but I prefer to observe first. I think I communicate better after I understand the other person's style and what kind of topics they are interested in."
+    ]
+  },
+  {
+    key: "kind of teacher",
+    answers: [
+      "I learn best from teachers who are clear and structured. I do not need them to be entertaining all the time, but I need to understand what the goal is and how each step connects to the next one.",
+      "For me, a good teacher is someone who can point out my specific problem instead of giving general comments. Encouragement is useful, but precise feedback is what actually helps me improve."
+    ]
+  },
+  {
+    key: "music helps people concentrate",
+    answers: [
+      "I think music can help, but it depends on the type of music and the task. Instrumental music may help people relax, while songs with lyrics can be distracting when they need to read or write.",
+      "For some people, yes. Music creates a comfortable atmosphere and blocks out random noise. But for difficult subjects, I think silence is still better because the brain needs more space to process information."
+    ]
+  },
+  {
+    key: "short break",
+    answers: [
+      "During a short break, I usually stand up, drink some water, or walk around for a few minutes. I try not to open social media, because a five-minute break can easily become half an hour.",
+      "I like doing something physical during a break, even if it is just stretching. It helps reset my attention. If I stay in the same chair and keep looking at a screen, I do not really feel refreshed."
+    ]
+  },
+  {
+    key: "quiet room",
+    answers: [
+      "I prefer a quiet room when I need to think deeply, because background noise makes it harder for me to hold information in my head. For light tasks, though, a bit of noise is fine.",
+      "I actually prefer some background noise. Total silence sometimes makes me tense, especially before exams. A soft level of noise makes the environment feel more natural and less stressful."
+    ]
+  },
+  {
+    key: "app you use",
+    answers: [
+      "One app I use almost every day is a notes app. I use it to collect vocabulary, reminders, and random ideas. It is simple, but it keeps my thoughts organised and stops me from forgetting small tasks.",
+      "I use a dictionary app very often. It is not just for checking meanings; I also look at example sentences and pronunciation. That helps me understand how a word is used naturally, not just what it means in Chinese."
+    ]
+  },
+  {
+    key: "difficult tasks",
+    answers: [
+      "I enjoy difficult tasks when I can see progress. The beginning can be frustrating, but once I understand the pattern, it feels satisfying. Difficult tasks also show me what I really need to improve.",
+      "To be honest, I do not always enjoy them, especially under time pressure. But I know they are useful. If I avoid every difficult task, I may feel comfortable for a while, but I will not grow much."
+    ]
+  },
+  {
+    key: "remember new words",
+    answers: [
+      "I usually remember new words by putting them into sentences. A single translation is easy to forget, but a sentence gives me context. I also review them several times instead of trying to memorise everything at once.",
+      "For me, pronunciation helps a lot. If I can say a word naturally, I remember it better. I also try to connect new words with topics, because topic groups are easier to recall in speaking."
+    ]
+  },
+  {
+    key: "working under time pressure",
+    answers: [
+      "I can work under time pressure, but I do not always enjoy it. A small amount of pressure makes me focus, while too much pressure makes me rush and make careless mistakes.",
+      "It depends on the task. If I have practised it many times, time pressure can make me more efficient. But for creative or complex work, I prefer having enough time to think and revise."
+    ]
+  },
+  {
+    key: "weather makes you feel productive",
+    answers: [
+      "Cool and bright weather makes me feel most productive. If it is too hot or too dark, I become tired more easily. A clear morning usually gives me the feeling that I can get things done.",
+      "I work better on rainy days, as long as I can stay indoors. The sound of rain makes the environment calmer, and I feel less tempted to go outside or do something unrelated."
+    ]
+  },
+  {
+    key: "asking questions in class",
+    answers: [
+      "I usually prefer asking questions after class, because I have more time to organise my thoughts. In class, I sometimes worry that my question is too basic or will interrupt the flow.",
+      "I think asking in class is better if the question is important, because other students may have the same confusion. But personally, I still feel more comfortable asking the teacher privately."
+    ]
+  },
+  {
+    key: "sleep before an important day",
+    answers: [
+      "It is not always easy for me. Before an important day, I tend to replay possible situations in my head. To sleep better, I try to prepare everything early and stop studying right before bed.",
+      "Usually I can sleep, but only if I feel prepared. If I leave too many things unfinished, my mind keeps working at night. So preparation is actually the best way for me to relax."
+    ]
+  },
+  {
+    key: "short videos or long articles",
+    answers: [
+      "For quick information, I prefer short videos because they are easy to understand and save time. But for serious topics, long articles are better because they explain the background and details more clearly.",
+      "I prefer long articles when I really want to learn something. Short videos are convenient, but they often simplify things too much. Articles force me to slow down and think more carefully."
+    ]
+  },
+  {
+    key: "food do you usually eat",
+    answers: [
+      "Before an exam, I usually eat something light, like bread, eggs, or fruit. I avoid anything too oily or heavy because I do not want to feel sleepy or uncomfortable during the test.",
+      "I try to eat familiar food before an exam. It is not the time to experiment with something new. The goal is simply to keep my energy stable and avoid any stomach problems."
+    ]
+  },
+  {
+    key: "enjoy competitions",
+    answers: [
+      "I enjoy competitions when they are healthy and fair. They can push me to work harder and show me where I stand. But if the pressure becomes too strong, competition can also make people anxious.",
+      "Not always. I like improving myself, but I do not want every activity to become a comparison. Sometimes competition helps, but sometimes cooperation is more useful, especially when people can learn from each other."
+    ]
+  },
+  {
+    key: "skill you learned recently",
+    answers: [
+      "A skill I learned recently is organising my notes more efficiently. I used to collect too much information, but now I try to summarise ideas in my own words. It makes review much faster.",
+      "Recently I have been practising how to speak more fluently in English. The key skill is not using difficult words, but keeping the answer moving even when I cannot think of a perfect sentence."
+    ]
+  },
+  {
+    key: "arrive early",
+    answers: [
+      "Yes, I usually arrive early, especially for exams or important appointments. Being early gives me time to calm down and check the environment. If I arrive at the last minute, I feel rushed.",
+      "I try to, but I am not always successful. For important events, I plan to arrive early because delays are stressful. For casual meetings, I may be more relaxed about time."
+    ]
+  },
+  {
+    key: "solved a difficult problem",
+    answers: [
+      "I would talk about a time when I was stuck on a maths problem before an exam. At first I kept repeating the same method, which did not work. Then I asked a classmate to explain the idea behind it, not just the answer. After that I realised I had misunderstood one condition. What made it meaningful was that I learned to step back instead of panicking.",
+      "A good example is when I had too many assignments in the same week. The problem was not one single task, but the feeling that everything was urgent. I wrote down all the deadlines, divided the work into small parts, and finished the easiest part first to build momentum. Looking back, it taught me that planning can reduce anxiety."
+    ]
+  },
+  {
+    key: "person who encouraged",
+    answers: [
+      "I would describe one of my teachers, who encouraged me to speak more in English. I used to worry too much about making mistakes, so I stayed quiet even when I had ideas. The teacher did not just say 'be confident'; she gave me small speaking tasks and corrected only the most important errors. That made the process less scary.",
+      "The person I would talk about is a friend who encouraged me to apply for a competition. I was unsure because I thought other students were stronger. He helped me prepare and reminded me that the experience mattered more than the result. Even though I was nervous, I ended up learning a lot from it."
+    ]
+  },
+  {
+    key: "useful skill you learned",
+    answers: [
+      "I learned how to edit short videos outside school. At first I only wanted to make simple clips, but gradually I learned about timing, subtitles, and background music. It is useful because video is now a common way to present ideas, and the skill also teaches me to communicate more visually.",
+      "A useful skill I learned is cooking a few simple meals. I learned it from my family and online videos. It may not sound impressive, but it makes me more independent. When I am busy or studying late, being able to prepare food for myself is genuinely helpful."
+    ]
+  },
+  {
+    key: "place where you can concentrate",
+    answers: [
+      "I would describe a quiet study room at home. It is not large, but the desk is clean and there are not many distractions around. I usually study English or do homework there. The reason it helps me focus is that my brain connects that place with work, so once I sit down, it is easier to enter study mode.",
+      "A place where I concentrate well is the library. The atmosphere there affects me in a positive way because everyone else is also reading or studying. Even if I feel lazy at first, seeing other people focus makes me more disciplined. It is especially useful before exams."
+    ]
+  },
+  {
+    key: "speak in front of others",
+    answers: [
+      "I remember giving a short presentation in class. There were only my classmates and teacher, but I still felt nervous because everyone was looking at me. I prepared a simple structure and practised the opening several times. During the presentation, I made a few small mistakes, but I kept going. Afterwards I felt relieved and more confident.",
+      "I once had to introduce a group project to other students. The hardest part was not the content, but controlling my voice and speed. I tried to look at different people instead of staring at my notes. It was a useful experience because it showed me that preparation can reduce fear, but it cannot remove it completely."
+    ]
+  },
+  {
+    key: "changed your opinion",
+    answers: [
+      "I would talk about an article on sleep and learning. Before reading it, I thought sleeping less before exams was a sign of hard work. The article explained that memory and attention become worse without enough sleep. It changed my opinion because I realised rest is part of preparation, not the opposite of it.",
+      "A video about social media changed my opinion. I used to think short videos were just entertainment, but it showed how algorithms can shape people's attention. After watching it, I became more careful about how much time I spend scrolling."
+    ]
+  },
+  {
+    key: "goal you want",
+    answers: [
+      "One goal I want to achieve is to speak English more naturally. It matters because I do not just want a test score; I want to use English in real classes and conversations. I have already started recording myself and practising timed answers. The difficult part is staying calm when I am judged.",
+      "A goal I have is to study abroad in the next few years. To reach it, I need strong academic results and a good English score. I have made some progress, but the challenge is balancing schoolwork, exams, and personal pressure. I think the process will train my independence."
+    ]
+  },
+  {
+    key: "learned from a mistake",
+    answers: [
+      "I once prepared for a test by only reading notes instead of doing practice questions. I felt familiar with the content, but in the exam I could not apply it quickly. After that, I learned that understanding and performance are not the same. Now I include timed practice in my preparation.",
+      "A mistake I learned from was leaving a group task too late. I thought it would be easy, but communication took longer than expected. The final result was rushed. Since then, I try to confirm roles and deadlines early, even for small projects."
+    ]
+  },
+  {
+    key: "conversation that was important",
+    answers: [
+      "I would describe a conversation with a teacher after a disappointing result. I expected simple encouragement, but the teacher helped me identify the exact problem. That conversation was important because it changed my focus from blaming myself to changing my method.",
+      "An important conversation I had was with my parents about future plans. I was worried they would only care about results, but they actually listened to my concerns. It made me feel more supported, and I became more willing to discuss pressure instead of hiding it."
+    ]
+  },
+  {
+    key: "activity that helps you relax",
+    answers: [
+      "An activity that helps me relax is walking alone while listening to music. I do it when I feel mentally tired. It does not require much planning, but it gives me space to slow down and organise my thoughts. After walking, I usually feel less tense.",
+      "I relax by watching light videos or doing simple exercise. The key is choosing something that does not require too much thinking. When I am stressed, I do not need more information; I need a short break that lets my body calm down."
+    ]
+  },
+  {
+    key: "perform worse in exams",
+    answers: [
+      "Some students perform worse in exams because pressure uses up their attention. In practice, they can think calmly, but in the exam they worry about the result and lose working memory. Another reason is that practice is often untimed, while real exams require speed and decision-making.",
+      "I think the gap comes from both psychology and training. A student may know the material, but if they have not practised under exam conditions, they may freeze when time is limited. So preparation should include not only knowledge, but also simulation."
+    ]
+  },
+  {
+    key: "manage stress",
+    answers: [
+      "Yes, schools should teach stress management because academic pressure is part of student life. If students only learn subjects but not how to handle pressure, they may burn out. Simple skills like planning, breathing, and asking for help can make a big difference.",
+      "I agree, but it should be practical rather than just a lecture. Students need routines they can actually use before exams or presentations. For example, schools could teach how to break a task into steps and how to recover after a bad result."
+    ]
+  },
+  {
+    key: "technology changed",
+    answers: [
+      "Technology has made learning much more flexible. Young people can watch explanations, use dictionaries, and take online courses anytime. However, it also creates distractions, because the same device used for study is also full of entertainment.",
+      "The biggest change is access to information. In the past, students relied mainly on teachers and textbooks. Now they can compare different explanations online. But this also means they need better judgement, because not all information is accurate or useful."
+    ]
+  },
+  {
+    key: "face-to-face communication",
+    answers: [
+      "Some people prefer face-to-face communication because it feels more personal and reliable. They can see facial expressions and hear tone, which helps avoid misunderstanding. This is especially important when discussing sensitive or complicated topics.",
+      "I think face-to-face communication gives people a stronger sense of connection. Online messages are convenient, but they can feel cold or unclear. In person, people can respond immediately and adjust their words based on the other person's reaction."
+    ]
+  },
+  {
+    key: "advantages of learning from mistakes",
+    answers: [
+      "Learning from mistakes is valuable because mistakes show the exact gap between what we think we know and what we can actually do. A mistake can be uncomfortable, but it gives clearer feedback than success.",
+      "One advantage is that the lesson is often memorable. If a student loses marks because of a specific error, they are more likely to remember it next time. Mistakes also build resilience, because people learn that failure is not final."
+    ]
+  },
+  {
+    key: "more pressure than previous generations",
+    answers: [
+      "In some ways, yes. Young people today face strong competition, constant comparison on social media, and uncertainty about the future. Even when they are doing well, they may feel that someone else is doing better.",
+      "I think the type of pressure has changed. Previous generations also had difficulties, but young people today are exposed to comparison all the time. The pressure is not only from school or family, but also from online images of success."
+    ]
+  },
+  {
+    key: "speak in public",
+    answers: [
+      "Public speaking is difficult because people feel judged. Even if the content is prepared, the speaker may worry about voice, pronunciation, or making mistakes. This fear can make the body tense and the mind go blank.",
+      "Another reason is lack of practice. Speaking to a group is a performance skill, not just a language skill. If people only practise alone, they may not be ready for the feeling of being watched."
+    ]
+  },
+  {
+    key: "compete with each other",
+    answers: [
+      "Students should be encouraged to compete in a healthy way. Competition can motivate people and give them a clear goal. But schools should avoid making students feel that their value depends only on ranking.",
+      "I think cooperation should be more important than competition. Some competition is useful, but too much comparison can damage confidence. Students should learn to improve themselves and also learn from others."
+    ]
+  },
+  {
+    key: "teacher effective",
+    answers: [
+      "An effective teacher explains clearly and understands students' problems. It is not enough to know the subject well; the teacher must know how to break ideas into steps and give useful feedback.",
+      "I think patience is very important. Students do not always understand something the first time. A good teacher can change the explanation instead of simply repeating the same words."
+    ]
+  },
+  {
+    key: "discipline when learning",
+    answers: [
+      "Discipline is extremely important when learning a language because progress comes from repeated practice. Talent may help at the beginning, but without regular exposure and speaking, improvement will be slow.",
+      "I would say discipline is more important than motivation. Motivation changes from day to day, but discipline keeps the habit going. For language learning, small daily actions are usually better than occasional intense study."
+    ]
+  },
+  {
+    key: "short videos for information",
+    answers: [
+      "Yes, some people rely too much on short videos. They are convenient, but they can make complex topics look simple. People may feel informed after watching a minute-long clip, even though they only know the surface.",
+      "I think short videos are useful as an introduction, but they should not be the only source of information. For serious decisions, people still need longer explanations, evidence, and different viewpoints."
+    ]
+  },
+  {
+    key: "ask for help",
+    answers: [
+      "Some people find it hard to ask for help because they do not want to look weak. They may think asking a question means they are not capable, even though everyone needs help sometimes.",
+      "Another reason is fear of judgement. If someone has been criticised before, they may prefer to struggle alone. A supportive environment makes a big difference because people feel safer admitting confusion."
+    ]
+  },
+  {
+    key: "parents help teenagers",
+    answers: [
+      "Parents can help teenagers become more confident by giving specific support instead of only focusing on results. If parents notice effort and progress, teenagers are more likely to take risks and try new things.",
+      "I think parents should listen before giving advice. Teenagers often know they need to improve, but they also need to feel understood. Confidence grows when they feel trusted, not controlled all the time."
+    ]
+  },
+  {
+    key: "specialize early",
+    answers: [
+      "I think young people should explore first and specialise later. Early exploration helps them understand their interests and strengths. If they specialise too early, they may miss other possibilities.",
+      "It depends on the field. For music or sports, early specialisation can be important. But for most academic and career choices, exploring different subjects is safer because teenagers are still changing."
+    ]
+  },
+  {
+    key: "jobs require strong communication",
+    answers: [
+      "Many jobs require strong communication, especially teaching, management, sales, and medicine. In these jobs, knowledge alone is not enough; people need to explain ideas, understand others, and build trust.",
+      "I think almost every job needs communication now. Even technical workers have to discuss problems with teammates or clients. Clear communication saves time and prevents mistakes."
+    ]
+  },
+  {
+    key: "online classes replace",
+    answers: [
+      "Online classes can replace some traditional lessons, especially for simple lectures or revision. They are flexible and convenient. But for discussion, supervision, and emotional support, traditional classrooms still have advantages.",
+      "I do not think online classes can fully replace classrooms. Learning is also social. Students need interaction, routine, and sometimes pressure from the environment. Online learning works best when students are already disciplined."
+    ]
+  },
+  {
+    key: "negative experiences",
+    answers: [
+      "People remember negative experiences more clearly because the brain treats them as warnings. If something painful or embarrassing happens, we want to avoid repeating it, so the memory becomes stronger.",
+      "Another reason is that negative experiences often involve strong emotions. A normal day may pass without much attention, but a stressful event makes people analyse what happened again and again."
+    ]
+  },
+  {
+    key: "exams be the main way",
+    answers: [
+      "Exams should be one important way to judge students, but not the only way. They are useful because they are standardised and efficient. However, they cannot fully measure creativity, teamwork, or long-term effort.",
+      "I think relying mainly on exams can be unfair. Some students are knowledgeable but perform badly under pressure. Schools should combine exams with projects, participation, and practical tasks."
+    ]
+  },
+  {
+    key: "stay calm when they are being judged",
+    answers: [
+      "People can stay calm by focusing on the task instead of the judgement. For example, in a speaking test, thinking about the next sentence is more useful than thinking about the score. Practice under realistic conditions also helps.",
+      "I think preparation and self-talk are both important. If people know they have practised enough, they feel safer. They can also remind themselves that being judged does not mean being attacked; it is just feedback."
+    ]
+  },
+  {
+    key: "confidence and preparation",
+    answers: [
+      "Confidence is the feeling that you can handle a situation, while preparation is the work that creates that feeling. Confidence without preparation can be empty, but preparation without confidence may still lead to nervous performance.",
+      "I would say preparation is the foundation and confidence is the result. If someone practises many times, they are more likely to trust themselves. However, confidence also needs experience, because people must prove to themselves that they can perform under pressure."
+    ]
+  }
+];
+
 const $ = (id) => document.getElementById(id);
 
 const els = {
@@ -161,6 +542,9 @@ const els = {
   resetPlanBtn: $("resetPlanBtn"),
   strictToggle: $("strictToggle"),
   voiceToggle: $("voiceToggle"),
+  voiceSelect: $("voiceSelect"),
+  previewVoiceBtn: $("previewVoiceBtn"),
+  voiceNote: $("voiceNote"),
   autoRecordToggle: $("autoRecordToggle"),
   quickPrepInput: $("quickPrepInput"),
   shortSpeakInput: $("shortSpeakInput"),
@@ -184,6 +568,8 @@ const els = {
   resetBrainBtn: $("resetBrainBtn"),
   coachStatus: $("coachStatus"),
   stemGrid: $("stemGrid"),
+  toggleAnswersBtn: $("toggleAnswersBtn"),
+  answerGrid: $("answerGrid"),
   audioPlayer: $("audioPlayer"),
   recordingNote: $("recordingNote"),
   micDiagnostics: $("micDiagnostics"),
@@ -226,6 +612,8 @@ const state = {
   lastStartedAt: 0,
   recordingCounted: false,
   selectedNotes: new Set(),
+  voices: [],
+  answerOpen: false,
   audioContext: null,
   analyser: null,
   meterId: null
@@ -539,6 +927,7 @@ function renderMode() {
   renderMockStrip();
   renderQuestion();
   renderStems();
+  renderAnswers();
   renderTimer();
   renderStats();
   updateButtons();
@@ -594,6 +983,54 @@ function renderStems() {
     item.append(title, body);
     els.stemGrid.append(item);
   });
+}
+
+function getReferenceAnswers(item) {
+  const question = (item?.q || "").toLowerCase();
+  const match = REFERENCE_PATTERNS.find((entry) => question.includes(entry.key));
+  if (match) return match.answers;
+
+  if (item?.source === "part2") {
+    return [
+      "I would start by choosing a simple real experience, then explain the background, what happened, and why I still remember it. The key is not to make the story dramatic, but to add clear details and a short reflection at the end.",
+      "Another way to answer is to focus on change: what I thought at first, what I did next, and what I learned afterwards. This structure gives the answer a clear beginning, middle, and ending."
+    ];
+  }
+
+  if (item?.source === "part3") {
+    return [
+      "I think the answer depends on the situation. One clear reason is that people have different needs and habits. For example, younger people may prefer speed and convenience, while older people may value reliability more.",
+      "There are two sides to this. On the one hand, it can bring clear benefits, such as saving time or reducing pressure. On the other hand, if people rely on it too much, it may create new problems."
+    ];
+  }
+
+  return [
+    "Generally speaking, I would give a direct answer first, then add one reason and a small example from my own life. That keeps the answer natural and stops it from becoming too abstract.",
+    "It depends on the situation, but my usual preference is simple. I would explain what I normally do, why it works for me, and then add a contrast to show a bit more flexibility."
+  ];
+}
+
+function renderAnswers() {
+  const answers = getReferenceAnswers(state.current);
+  els.answerGrid.innerHTML = "";
+  els.answerGrid.classList.toggle("hidden", !state.answerOpen);
+  els.toggleAnswersBtn.textContent = state.answerOpen ? "收起" : "展开";
+
+  answers.slice(0, 2).forEach((answer, index) => {
+    const card = document.createElement("article");
+    const title = document.createElement("b");
+    const text = document.createElement("p");
+    card.className = "answer-card";
+    title.textContent = `参考 ${index + 1}`;
+    text.textContent = answer;
+    card.append(title, text);
+    els.answerGrid.append(card);
+  });
+}
+
+function toggleAnswers() {
+  state.answerOpen = !state.answerOpen;
+  renderAnswers();
 }
 
 function renderTimer() {
@@ -713,17 +1150,128 @@ function advanceMock() {
   }
 }
 
+function scoreVoice(voice) {
+  const name = voice.name.toLowerCase();
+  const lang = voice.lang.toLowerCase();
+  let score = 0;
+
+  if (lang.startsWith("en-us")) score += 35;
+  else if (lang.startsWith("en-gb")) score += 32;
+  else if (lang.startsWith("en-au") || lang.startsWith("en-ca") || lang.startsWith("en-ie")) score += 26;
+  else if (lang.startsWith("en")) score += 18;
+
+  [
+    "natural",
+    "premium",
+    "enhanced",
+    "samantha",
+    "daniel",
+    "serena",
+    "arthur",
+    "martha",
+    "moira",
+    "karen",
+    "tessa",
+    "ava",
+    "allison",
+    "google",
+    "microsoft",
+    "siri"
+  ].forEach((token, index) => {
+    if (name.includes(token)) score += 24 - Math.min(index, 12);
+  });
+
+  if (name.includes("compact") || name.includes("novelty") || name.includes("robot")) score -= 30;
+  if (voice.localService) score += 2;
+  return score;
+}
+
+function sortVoices(voices) {
+  return [...voices].sort((a, b) => {
+    const scoreDelta = scoreVoice(b) - scoreVoice(a);
+    if (scoreDelta) return scoreDelta;
+    return a.name.localeCompare(b.name);
+  });
+}
+
+function loadVoices() {
+  if (!("speechSynthesis" in window)) {
+    els.voiceSelect.disabled = true;
+    els.previewVoiceBtn.disabled = true;
+    els.voiceNote.textContent = "当前浏览器不支持网页读题。";
+    return;
+  }
+
+  const voices = sortVoices(window.speechSynthesis.getVoices().filter((voice) => voice.lang.toLowerCase().startsWith("en")));
+  state.voices = voices;
+  const savedVoice = localStorage.getItem("ieltsVoiceName") || "";
+  const currentValue = els.voiceSelect.value || savedVoice;
+  els.voiceSelect.innerHTML = "";
+
+  const auto = document.createElement("option");
+  auto.value = "";
+  auto.textContent = voices[0] ? `自动选择：${voices[0].name} (${voices[0].lang})` : "自动选择";
+  els.voiceSelect.append(auto);
+
+  voices.forEach((voice) => {
+    const option = document.createElement("option");
+    option.value = voice.name;
+    option.textContent = `${voice.name} (${voice.lang})`;
+    els.voiceSelect.append(option);
+  });
+
+  els.voiceSelect.disabled = !voices.length;
+  els.previewVoiceBtn.disabled = !voices.length;
+
+  if (voices.some((voice) => voice.name === currentValue)) {
+    els.voiceSelect.value = currentValue;
+  }
+
+  const selected = getSelectedVoice();
+  if (selected) {
+    els.voiceNote.textContent = `当前读题音色：${selected.name} (${selected.lang})`;
+  } else {
+    els.voiceNote.textContent = "还没有加载到英语音色；可刷新页面或换 Chrome/Safari。";
+  }
+}
+
+function getSelectedVoice() {
+  if (!state.voices.length && "speechSynthesis" in window) {
+    state.voices = sortVoices(window.speechSynthesis.getVoices().filter((voice) => voice.lang.toLowerCase().startsWith("en")));
+  }
+  const selectedName = els.voiceSelect.value || localStorage.getItem("ieltsVoiceName") || "";
+  return state.voices.find((voice) => voice.name === selectedName) || state.voices[0] || null;
+}
+
+function speakText(text, options = {}) {
+  if (!("speechSynthesis" in window)) return;
+  window.speechSynthesis.cancel();
+  const utterance = new SpeechSynthesisUtterance(text);
+  const voice = getSelectedVoice();
+  if (voice) {
+    utterance.voice = voice;
+    utterance.lang = voice.lang;
+  } else {
+    utterance.lang = "en-US";
+  }
+  utterance.rate = options.rate || 0.84;
+  utterance.pitch = options.pitch || 1;
+  utterance.volume = 1;
+  window.speechSynthesis.speak(utterance);
+}
+
+function previewVoice() {
+  speakText("Do you prefer studying alone or with other people? Let me think about that for a second.", {
+    rate: 0.84
+  });
+}
+
 function speakQuestion() {
   if (!els.voiceToggle.checked || !("speechSynthesis" in window)) return;
-  window.speechSynthesis.cancel();
   const text = state.current.cues
-    ? `${state.current.q} You should say: ${state.current.cues.join(", ")}.`
+    ? `${state.current.q}. You should say: ${state.current.cues.join(". ")}.`
     : state.current.q;
-  const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = "en-US";
-  utterance.rate = 0.9;
-  utterance.pitch = 1;
-  window.speechSynthesis.speak(utterance);
+  speakText(text, { rate: state.current.source === "part2" ? 0.82 : 0.86 });
 }
 
 function startDrill() {
@@ -1127,6 +1675,11 @@ function bindEvents() {
 
   els.strictToggle.addEventListener("change", renderMode);
   els.voiceToggle.addEventListener("change", renderMode);
+  els.voiceSelect.addEventListener("change", () => {
+    localStorage.setItem("ieltsVoiceName", els.voiceSelect.value);
+    loadVoices();
+  });
+  els.previewVoiceBtn.addEventListener("click", previewVoice);
   els.autoRecordToggle.addEventListener("change", renderMode);
   els.quickPrepInput.addEventListener("change", renderMode);
   els.shortSpeakInput.addEventListener("change", renderMode);
@@ -1147,6 +1700,8 @@ function bindEvents() {
     button.addEventListener("click", () => toggleNoteTag(button.dataset.note));
   });
 
+  els.toggleAnswersBtn.addEventListener("click", toggleAnswers);
+
   els.rubricInputs.forEach((input) => {
     input.addEventListener("input", renderRubrics);
   });
@@ -1155,6 +1710,12 @@ function bindEvents() {
 function init() {
   state.current = makeQuestion("warmup");
   bindEvents();
+  if ("speechSynthesis" in window) {
+    loadVoices();
+    window.speechSynthesis.onvoiceschanged = loadVoices;
+  } else {
+    loadVoices();
+  }
   renderServerBadge();
   refreshMicDiagnostics();
   renderPlan();
