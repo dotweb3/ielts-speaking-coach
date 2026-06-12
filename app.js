@@ -1550,9 +1550,144 @@ function renderQuestion() {
   renderTopicSource(shouldHide);
 }
 
+function makePart1SeasonStems(item) {
+  const question = (item?.q || "").toLowerCase();
+  const topic = topicForAnswer(item);
+
+  if (question.startsWith("what")) {
+    return [
+      ["直答", `For ${topic}, I would say...`],
+      ["习惯", "In my daily life, I usually..."],
+      ["细节", "One small detail is that..."],
+      ["回扣", "So that is my normal answer to this question."]
+    ];
+  }
+
+  if (question.startsWith("how often")) {
+    return [
+      ["频率", "I would say fairly often, but not every day."],
+      ["场景", `It usually happens when I think about ${topic}.`],
+      ["例子", "For example, on school days..."],
+      ["补充", "So it is familiar to me, but not a huge part of my life."]
+    ];
+  }
+
+  if (question.startsWith("did you") || question.includes("when you were younger") || question.includes("when you were a child")) {
+    return [
+      ["过去", "When I was younger, I used to..."],
+      ["现在", "Now, I see it a little differently."],
+      ["原因", "The reason is that I have more experience now."],
+      ["收束", "So my answer has changed a bit over time."]
+    ];
+  }
+
+  if (question.startsWith("would you")) {
+    return [
+      ["意愿", "Yes, I would like to try it if I had the chance."],
+      ["条件", "It would depend on my time and the situation."],
+      ["原因", `I think ${topic} could be interesting because...`],
+      ["回扣", "So I would be open to it, but not in every situation."]
+    ];
+  }
+
+  if (question.startsWith("do you prefer")) {
+    return [
+      ["选择", "I normally prefer the more practical option."],
+      ["原因", "The main reason is convenience."],
+      ["对比", "Compared with the other option, it feels..."],
+      ["回扣", "So my preference is mainly based on daily use."]
+    ];
+  }
+
+  return [
+    ["直答", `For ${topic}, I would say yes, to some extent.`],
+    ["原因", "The main reason is that it connects with my daily life."],
+    ["例子", "For example, when I have free time..."],
+    ["回扣", "So overall, I have a generally positive view."]
+  ];
+}
+
+function makePart2SeasonStems(item) {
+  const topic = item?.seasonTopic ? getP23TopicInfo(item.seasonTopic).cue : "this experience";
+
+  return [
+    ["对象", `I'm going to talk about ${topic}.`],
+    ["背景", "It happened when I was..."],
+    ["细节", "The clearest thing I remember is..."],
+    ["收束", "Looking back, this experience mattered because..."]
+  ];
+}
+
+function makePart3SeasonStems(item) {
+  const question = (item?.q || "").toLowerCase();
+  const topic = item?.seasonTopic ? getP23TopicInfo(item.seasonTopic).discussion : "this issue";
+
+  if (question.startsWith("why")) {
+    return [
+      ["观点", `People care about ${topic} mainly because...`],
+      ["原因", "The first reason is that..."],
+      ["例子", "A simple example would be..."],
+      ["收束", "So it is not just a small personal matter."]
+    ];
+  }
+
+  if (question.startsWith("do young people and older people")) {
+    return [
+      ["立场", "Yes, I think there is a difference."],
+      ["年轻人", "Young people may focus more on..."],
+      ["年长者", "Older people may care more about..."],
+      ["平衡", "Of course, this is not true for everyone."]
+    ];
+  }
+
+  if (question.startsWith("how has technology")) {
+    return [
+      ["变化", `Technology has made ${topic} more visible.`],
+      ["好处", "One benefit is that people can..."],
+      ["问题", "However, it may also make people..."],
+      ["总结", "So technology changes both access and attitude."]
+    ];
+  }
+
+  if (question.startsWith("what problems")) {
+    return [
+      ["问题", `One problem with ${topic} is...`],
+      ["原因", "This often happens because..."],
+      ["例子", "For example, people may..."],
+      ["解决", "A possible solution is to..."]
+    ];
+  }
+
+  if (question.includes("future")) {
+    return [
+      ["预测", `I think ${topic} will become more important.`],
+      ["原因", "This is because society is changing quickly."],
+      ["例子", "For example, in the future people may..."],
+      ["保留", "But it also depends on technology and lifestyle."]
+    ];
+  }
+
+  return [
+    ["观点", `In terms of ${topic}, I think it depends.`],
+    ["原因", "The main reason is that people have different needs."],
+    ["例子", "For example, younger people may..."],
+    ["对比", "That said, some people may see it differently."]
+  ];
+}
+
+function getStemSet(item) {
+  if (item?.seasonTopic) {
+    if (item.source === "part2") return makePart2SeasonStems(item);
+    if (item.source === "part3") return makePart3SeasonStems(item);
+    return makePart1SeasonStems(item);
+  }
+
+  const source = item?.source || state.mode;
+  return STEMS[source] || STEMS.warmup;
+}
+
 function renderStems() {
-  const source = state.current?.source || state.mode;
-  const stems = STEMS[source] || STEMS.warmup;
+  const stems = getStemSet(state.current);
   els.stemGrid.innerHTML = "";
 
   stems.forEach(([label, text]) => {
@@ -1567,7 +1702,164 @@ function renderStems() {
   });
 }
 
+function topicForAnswer(item) {
+  return `the topic of ${toSentenceTopic(item?.seasonTopic || "this topic")}`;
+}
+
+function makePart1SeasonAnswers(item) {
+  const question = (item?.q || "").toLowerCase();
+  const topic = topicForAnswer(item);
+
+  if (
+    question.startsWith("what do") ||
+    question.startsWith("what did") ||
+    question.startsWith("what is") ||
+    question.startsWith("what was")
+  ) {
+    return [
+      `For ${topic}, I would give a simple personal answer first. I would mention what I normally do or think, then add one small example from daily life. That makes the answer sound natural instead of too abstract.`,
+      `My answer would depend on the exact situation, but I would keep it practical. I would connect ${topic} with my own routine, because Part 1 answers usually sound better when they include a real habit or preference.`
+    ];
+  }
+
+  if (question.startsWith("what kind")) {
+    return [
+      `For ${topic}, I usually prefer something practical and easy to enjoy. I do not need it to be perfect, but it should fit my daily routine. For example, if I am busy with schoolwork, I choose the option that saves time and still makes me feel comfortable.`,
+      `It depends on the situation, but I normally go for a simple and familiar type of ${topic}. I think this is because I do not like spending too much energy on small choices, especially on school days.`
+    ];
+  }
+
+  if (question.startsWith("how often")) {
+    return [
+      `I would say I pay attention to ${topic} fairly often, although not every day. It usually comes up when I am relaxing, using my phone, or talking with friends. So it is not a huge part of my life, but it is definitely familiar to me.`,
+      `Not extremely often, but ${topic} is still part of my normal life. I notice it more when I have free time, because during school days my mind is mostly on homework and exams.`
+    ];
+  }
+
+  if (question.startsWith("did you") || question.includes("when you were younger") || question.includes("when you were a child")) {
+    return [
+      `Yes, when I was younger, I had some contact with ${topic}, but I did not think about it very deeply. As I have grown older, I have become more aware of the details and I can explain my opinions more clearly now.`,
+      `Not really. As a child, I was more focused on simple fun, so ${topic} was not something I paid much attention to. I understand it better now because my interests have become broader.`
+    ];
+  }
+
+  if (question.startsWith("would you")) {
+    return [
+      `Yes, I would, because ${topic} sounds like something that could give me a new experience. I may not be very good at it at first, but I think trying it once would be interesting and useful.`,
+      `Maybe, but it would depend on the time and situation. If I had enough free time after exams, I would be more willing to explore ${topic}; otherwise I might put it aside.`
+    ];
+  }
+
+  if (question.startsWith("are there")) {
+    return [
+      `Yes, there are some examples connected with ${topic}, especially in cities or online. I may not notice them every day, but when I pay attention, I can see that they are quite common.`,
+      `It depends on the place. In a big city, people may see more things related to ${topic}, while in a smaller place it might be less obvious or less common.`
+    ];
+  }
+
+  if (question.startsWith("do people")) {
+    return [
+      `Yes, many people do, although the level of interest is different from person to person. With ${topic}, some people care about it a lot, while others only notice it when it affects their daily life.`,
+      `I think people pay attention to ${topic} when it is useful or enjoyable for them. If it has no connection with their routine, they may not think about it very often.`
+    ];
+  }
+
+  if (question.startsWith("do you prefer")) {
+    return [
+      `I usually prefer the option that feels more convenient and natural for me. With ${topic}, I do not want to make things too complicated, so I normally choose what fits my routine best.`,
+      `It depends, but I tend to choose the more practical option. I think personal habits matter a lot when answering questions about ${topic}, because different people value different things.`
+    ];
+  }
+
+  if (question.startsWith("who")) {
+    return [
+      `Usually I would choose someone I feel relaxed with, such as a close friend or a family member. With ${topic}, I think the company matters because it can make the whole experience feel more natural.`,
+      `I normally prefer doing this with people who have similar tastes to mine. If we both enjoy ${topic}, the conversation becomes easier and there is less pressure.`
+    ];
+  }
+
+  if (question.startsWith("should")) {
+    return [
+      `Yes, I think people should take ${topic} seriously, at least to some extent. It may not be the most urgent issue every day, but it can affect people's habits, choices, and quality of life.`,
+      `I agree in general, but I also think it depends on the cost and effort involved. If dealing with ${topic} is realistic and useful, then people should definitely pay more attention to it.`
+    ];
+  }
+
+  if (question.startsWith("has your") || question.includes("changed")) {
+    return [
+      `Yes, my view of ${topic} has changed a little. In the past I cared less about it, but now I notice how it connects with daily life. I think this is a normal change as people get older.`,
+      `It has changed, but not dramatically. I still have some of the same preferences, but I have become more open-minded about ${topic}, especially after seeing different examples online.`
+    ];
+  }
+
+  return [
+    `Yes, I do, at least to some extent. For me, ${topic} is connected with daily life, so I can usually find something to say about it. I may not be an expert, but I have my own basic preferences and habits.`,
+    `It depends, but I would say I am generally positive about ${topic}. The reason is that it can make life more interesting or convenient, especially when I have time to enjoy it properly.`
+  ];
+}
+
+function makePart2SeasonAnswers(item) {
+  const topic = item?.seasonTopic ? getP23TopicInfo(item.seasonTopic).cue : item?.q || "this experience";
+
+  return [
+    `I would describe ${topic}. It was not necessarily a dramatic experience, but it was clear enough for me to remember. I would start with when and where it happened, then explain the main details, and finally say why it mattered to me. The most important part is to add one specific moment, because that makes the answer sound real rather than memorised.`,
+    `A good way to answer this is to choose a simple personal example connected with ${topic}. I would explain the background first, then talk about what happened step by step. At the end, I would add how I felt or what I learned, so the story has a clear ending.`
+  ];
+}
+
+function makePart3SeasonAnswers(item) {
+  const question = item?.q || "";
+  const lower = question.toLowerCase();
+  const topic = item?.seasonTopic ? getP23TopicInfo(item.seasonTopic).discussion : "this issue";
+
+  if (lower.startsWith("why")) {
+    return [
+      `One reason is that ${topic} can affect people's daily choices and long-term plans. When something has a direct influence on convenience, money, study, or relationships, people naturally care about it more.`,
+      `I think people care about ${topic} because it is not just a personal preference. It can also reflect social changes, such as technology, lifestyle, or pressure, so people discuss it more often.`
+    ];
+  }
+
+  if (lower.startsWith("do young people and older people")) {
+    return [
+      `Yes, I think they often see ${topic} differently. Young people may focus more on speed, convenience, and personal feelings, while older people may care more about stability, tradition, and practical results.`,
+      `There is definitely a difference, although it is not absolute. Young people are usually more open to new ideas about ${topic}, but older people may have more experience, so their opinions can be more cautious.`
+    ];
+  }
+
+  if (lower.startsWith("how has technology")) {
+    return [
+      `Technology has made ${topic} more visible and easier to discuss. People can see examples online, compare different opinions, and make decisions faster than before. But it can also make people impatient or too dependent on quick information.`,
+      `It has changed people's attitude by giving them more choices. For example, social media and apps can make ${topic} feel closer to everyday life, but they can also create pressure because people keep comparing themselves with others.`
+    ];
+  }
+
+  if (lower.startsWith("what problems")) {
+    return [
+      `One common problem is that people may not have enough time, money, or reliable information to deal with ${topic} properly. As a result, they may make quick decisions and later feel regretful.`,
+      `Another problem is pressure from other people. With ${topic}, people sometimes care too much about what others think, so they may choose something that looks good instead of something that really suits them.`
+    ];
+  }
+
+  if (lower.includes("future")) {
+    return [
+      `Yes, I think ${topic} will become more important in the future, because people's lives are becoming more complex. When society changes quickly, this kind of issue often becomes more noticeable.`,
+      `Probably yes, but it depends on how society develops. If technology and lifestyle keep changing, people will need to think about ${topic} more carefully instead of treating it as a small matter.`
+    ];
+  }
+
+  return [
+    `I think the answer depends on the situation. In general, ${topic} can bring clear benefits, but it can also create pressure if people do not manage it well.`,
+    `There are two sides to this. On the one hand, ${topic} can make life easier or more meaningful. On the other hand, people should avoid relying on it too much or copying others blindly.`
+  ];
+}
+
 function getReferenceAnswers(item) {
+  if (item?.seasonTopic) {
+    if (item.source === "part2") return makePart2SeasonAnswers(item);
+    if (item.source === "part3") return makePart3SeasonAnswers(item);
+    return makePart1SeasonAnswers(item);
+  }
+
   const question = (item?.q || "").toLowerCase();
   const match = REFERENCE_PATTERNS.find((entry) => question.includes(entry.key));
   if (match) return match.answers;
