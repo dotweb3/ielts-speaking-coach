@@ -101,6 +101,332 @@ const BANK = {
   ]
 };
 
+const IELTSBRO_SEASON = {
+  api: "https://hcp-server.ieltsbro.com/hcp/qsBank/topicChange/getDataV2/1",
+  page: "https://next.ieltsbro.com/oral_season/",
+  label: "IELTSbro 2026年5-8月题库"
+};
+
+const SEASON_CACHE_KEY = "ieltsbroSeason2026";
+
+const QUICK_PART_META = {
+  part1: { label: "Part 1", source: "warmup", speak: 45 },
+  part2: { label: "Part 2", source: "part2", speak: 90 },
+  part3: { label: "Part 3", source: "part3", speak: 75 }
+};
+
+const PART1_TOPIC_QUESTIONS = {
+  Art: [
+    "Do you like art?",
+    "Did you enjoy drawing or painting when you were younger?",
+    "Would you like to visit an art exhibition?"
+  ],
+  "Sports programs": [
+    "Do you like watching sports programs?",
+    "What kinds of sports programs are popular in your country?",
+    "Did you watch sports programs when you were a child?"
+  ],
+  "Morning routines": [
+    "Do you usually have a fixed morning routine?",
+    "What do you normally do after you get up?",
+    "Do you prefer mornings or evenings?"
+  ],
+  "Evening time": [
+    "What do you usually do in the evening?",
+    "Do you prefer to study in the evening?",
+    "Has your evening routine changed recently?"
+  ],
+  "Old buildings": [
+    "Are there many old buildings in your city?",
+    "Do you like visiting old buildings?",
+    "Should old buildings be protected?"
+  ],
+  "Films/cinemas": [
+    "Do you like watching films in a cinema?",
+    "What kinds of films do you usually watch?",
+    "Who do you normally watch films with?"
+  ],
+  History: [
+    "Do you like learning history?",
+    "How did you learn history when you were younger?",
+    "Do you think history is useful?"
+  ],
+  Headphones: [
+    "Do you often use headphones?",
+    "When do you usually use headphones?",
+    "Do you prefer headphones or speakers?"
+  ],
+  "Jokes & Comedies": [
+    "Do you like watching comedies?",
+    "Do you often tell jokes to other people?",
+    "What kind of humour do people your age like?"
+  ],
+  Clothing: [
+    "What kind of clothes do you usually wear?",
+    "Do you care much about fashion?",
+    "Have your clothing preferences changed over time?"
+  ],
+  Singing: [
+    "Do you like singing?",
+    "Did you sing much when you were a child?",
+    "Would you like to learn to sing better?"
+  ],
+  "Outer space and stars": [
+    "Are you interested in outer space and stars?",
+    "Did you learn about space when you were at school?",
+    "Would you like to travel to space?"
+  ],
+  Science: [
+    "Do you like science?",
+    "What science subject did you find interesting at school?",
+    "Do you think science is important in daily life?"
+  ],
+  "Public gardens and parks": [
+    "Do you often go to public gardens or parks?",
+    "What do people usually do in parks in your city?",
+    "Did you go to parks when you were a child?"
+  ],
+  Cars: [
+    "Do you like cars?",
+    "Do people in your city use cars a lot?",
+    "Would you like to drive in the future?"
+  ],
+  Shopping: [
+    "Do you like shopping?",
+    "What do you usually buy when you go shopping?",
+    "Do you prefer shopping online or in stores?"
+  ],
+  Watch: [
+    "Do you often wear a watch?",
+    "Did you wear a watch when you were younger?",
+    "Do you think watches are still useful?"
+  ],
+  Websites: [
+    "What kinds of websites do you often visit?",
+    "Do you prefer websites or mobile apps?",
+    "Have you ever learned something useful from a website?"
+  ],
+  Tidiness: [
+    "Are you a tidy person?",
+    "How do you keep your room tidy?",
+    "Were you tidy when you were a child?"
+  ],
+  Mirrors: [
+    "Do you often look in the mirror?",
+    "Do you use mirrors when buying clothes?",
+    "Do you think mirrors are important at home?"
+  ],
+  Teachers: [
+    "Do you have a favourite teacher?",
+    "What kind of teacher do you learn best from?",
+    "Did you want to be a teacher when you were younger?"
+  ],
+  "Social media": [
+    "Do you often use social media?",
+    "What do you usually do on social media?",
+    "Do you think social media is useful?"
+  ],
+  "Dream and ambition": [
+    "What was your dream when you were a child?",
+    "Do you think ambition is important?",
+    "Has your dream changed in recent years?"
+  ],
+  Music: [
+    "Do you like listening to music?",
+    "What kind of music do you usually listen to?",
+    "Did you learn music when you were younger?"
+  ]
+};
+
+const P23_TOPIC_MAP = {
+  近期改变: {
+    cue: "a recent change in your life",
+    discussion: "change in people's lives"
+  },
+  当地新闻: {
+    cue: "a piece of local news you heard recently",
+    discussion: "local news"
+  },
+  想要颁布的环保法律: {
+    cue: "an environmental law you would like to introduce",
+    discussion: "environmental laws"
+  },
+  改变重要想法: {
+    cue: "a time when you changed an important opinion",
+    discussion: "changing opinions"
+  },
+  遇到困难终成功的人: {
+    cue: "a person who succeeded after facing difficulties",
+    discussion: "success after difficulties"
+  },
+  交通拥堵: {
+    cue: "a time when you were caught in a traffic jam",
+    discussion: "traffic problems"
+  },
+  "长久目标/抱负": {
+    cue: "a long-term goal or ambition you have",
+    discussion: "long-term goals"
+  },
+  组织快乐活动: {
+    cue: "an enjoyable activity you organised",
+    discussion: "organising activities"
+  },
+  很久没收到回复的信息: {
+    cue: "a message you sent that did not get a reply for a long time",
+    discussion: "digital communication"
+  },
+  保护环境的法律: {
+    cue: "a law that helps protect the environment",
+    discussion: "environmental protection"
+  },
+  花费甚少的外出日: {
+    cue: "a day out that did not cost much",
+    discussion: "low-cost leisure activities"
+  },
+  别人帮助解决问题: {
+    cue: "a time when someone helped you solve a problem",
+    discussion: "helping others"
+  },
+  包含动物的故事或书: {
+    cue: "a story or book that includes animals",
+    discussion: "stories about animals"
+  },
+  "重要河流/湖泊": {
+    cue: "an important river or lake",
+    discussion: "rivers and lakes"
+  },
+  语言学习: {
+    cue: "a language you learned or would like to learn",
+    discussion: "language learning"
+  },
+  喜欢拜访但不想住的家: {
+    cue: "a home you like visiting but would not want to live in",
+    discussion: "different kinds of homes"
+  },
+  推荐旅行过的地方: {
+    cue: "a place you have travelled to and would recommend",
+    discussion: "travel recommendations"
+  },
+  名人出演的广告: {
+    cue: "an advertisement featuring a famous person",
+    discussion: "celebrity advertising"
+  },
+  遇到的科技问题: {
+    cue: "a technology problem you had",
+    discussion: "technology problems"
+  },
+  擅长学习和说语言的人: {
+    cue: "a person who is good at learning and speaking languages",
+    discussion: "people with strong language skills"
+  },
+  特别场合的食物: {
+    cue: "some food people eat on a special occasion",
+    discussion: "food for special occasions"
+  },
+  喜欢的现场体育赛事: {
+    cue: "a live sports event you enjoyed watching",
+    discussion: "live sports events"
+  },
+  重要决定: {
+    cue: "an important decision you made",
+    discussion: "making important decisions"
+  },
+  在团队中工作: {
+    cue: "a time when you worked in a team",
+    discussion: "teamwork"
+  },
+  近期改变的计划: {
+    cue: "a plan you changed recently",
+    discussion: "changing plans"
+  },
+  拥有成功商业的人: {
+    cue: "a person who runs a successful business",
+    discussion: "successful businesses"
+  },
+  在成功公司工作的人: {
+    cue: "a person who works for a successful company",
+    discussion: "successful companies"
+  },
+  想从事医疗行业的人: {
+    cue: "a person who wants to work in healthcare",
+    discussion: "healthcare jobs"
+  },
+  发小: {
+    cue: "a childhood friend",
+    discussion: "childhood friendships"
+  },
+  想颁布的新法律: {
+    cue: "a new law you would like to introduce",
+    discussion: "new laws"
+  },
+  "喜欢在家/花园种植物的人": {
+    cue: "a person who likes growing plants at home or in a garden",
+    discussion: "growing plants"
+  },
+  早起经历: {
+    cue: "a time when you got up early",
+    discussion: "getting up early"
+  },
+  去过的无聊地方: {
+    cue: "a boring place you have visited",
+    discussion: "places people visit"
+  },
+  有趣视频: {
+    cue: "an interesting video you watched",
+    discussion: "online videos"
+  },
+  喜欢或不喜欢的高建筑: {
+    cue: "a tall building you like or dislike",
+    discussion: "tall buildings"
+  },
+  收到特殊蛋糕: {
+    cue: "a special cake you received",
+    discussion: "cakes and celebrations"
+  },
+  想有空时去旅游的地方: {
+    cue: "a place you would like to travel to when you have free time",
+    discussion: "places people want to visit"
+  },
+  商店: {
+    cue: "a shop you like",
+    discussion: "shops and shopping habits"
+  },
+  想见的名人: {
+    cue: "a famous person you would like to meet",
+    discussion: "famous people"
+  },
+  有趣的建筑: {
+    cue: "an interesting building",
+    discussion: "interesting buildings"
+  },
+  近期看过且享受的电影: {
+    cue: "a film you watched recently and enjoyed",
+    discussion: "films"
+  },
+  喜欢的电视网络节目: {
+    cue: "a TV or online programme you like",
+    discussion: "TV and online programmes"
+  },
+  安静的地方: {
+    cue: "a quiet place you like",
+    discussion: "quiet places"
+  }
+};
+
+const PART2_CUE_SETS = [
+  ["what it was", "when it happened", "what you did", "and explain why you remember it"],
+  ["who or what was involved", "where it happened", "what happened next", "and explain how you felt about it"],
+  ["when you first noticed it", "why it was important", "what details you remember", "and explain what you learned from it"]
+];
+
+const PART3_TEMPLATES = [
+  (topic) => `Why do people care about ${topic} in modern life?`,
+  (topic) => `Do young people and older people think differently about ${topic}?`,
+  (topic) => `How has technology changed people's attitude towards ${topic}?`,
+  (topic) => `What problems can people face with ${topic}?`,
+  (topic) => `Do you think ${topic} will become more important in the future?`
+];
+
 const PLAN_ITEMS = [
   { id: "quick", text: "3秒开口 10 题" },
   { id: "part2", text: "Part 2 录音 3 条" },
@@ -535,8 +861,11 @@ const $ = (id) => document.getElementById(id);
 const els = {
   modeTabs: [...document.querySelectorAll(".mode-tab")],
   serverBadge: $("serverBadge"),
+  seasonBadge: $("seasonBadge"),
   micBadge: $("micBadge"),
   strictBadge: $("strictBadge"),
+  quickPartControl: $("quickPartControl"),
+  quickPartTabs: [...document.querySelectorAll(".quick-part-tab")],
   planProgress: $("planProgress"),
   planList: $("planList"),
   resetPlanBtn: $("resetPlanBtn"),
@@ -557,6 +886,7 @@ const els = {
   timingLabel: $("timingLabel"),
   questionText: $("questionText"),
   cueList: $("cueList"),
+  topicSource: $("topicSource"),
   phaseLabel: $("phaseLabel"),
   timerText: $("timerText"),
   timebarFill: $("timebarFill"),
@@ -593,6 +923,7 @@ const els = {
 const state = {
   mode: "warmup",
   current: null,
+  quickPart: localStorage.getItem("ieltsQuickPart") || "part1",
   phase: "idle",
   phaseTotal: 0,
   remaining: 0,
@@ -614,6 +945,15 @@ const state = {
   selectedNotes: new Set(),
   voices: [],
   answerOpen: false,
+  season: {
+    status: "loading",
+    part1: [],
+    part23: [],
+    updatedAt: "",
+    fetchedAt: "",
+    fromCache: false,
+    error: ""
+  },
   audioContext: null,
   analyser: null,
   meterId: null
@@ -684,7 +1024,179 @@ function clampNumber(input, fallback, min, max) {
   return Math.min(max, Math.max(min, Math.round(value)));
 }
 
+function cleanTopic(topic) {
+  return String(topic || "").replace(/\s+/g, " ").trim();
+}
+
+function toSentenceTopic(topic) {
+  return cleanTopic(topic).replace(/&/g, "and").toLowerCase();
+}
+
+function topicDate(value) {
+  if (!value) return "";
+  const text = String(value);
+  return text.includes("T") ? text.slice(0, 10) : text.slice(0, 10);
+}
+
+function normalizeSeasonItem(item, index) {
+  const topic = cleanTopic(item?.oralTopicName);
+  return {
+    topic,
+    code: item?.oralTopicCode || "",
+    questionPic: item?.questionPic || "",
+    createdAt: topicDate(item?.topicCreateDate || item?.createDate),
+    updatedAt: topicDate(item?.updateDate),
+    index
+  };
+}
+
+function normalizeSeasonData(content) {
+  const part1 = (content?.p1List || [])
+    .map(normalizeSeasonItem)
+    .filter((item) => item.topic);
+  const part23 = (content?.p23List || [])
+    .map(normalizeSeasonItem)
+    .filter((item) => item.topic);
+
+  return {
+    status: "ready",
+    part1,
+    part23,
+    updatedAt: topicDate(content?.p23UpdateDate || content?.p1UpdateDate),
+    fetchedAt: new Date().toISOString(),
+    fromCache: false,
+    error: ""
+  };
+}
+
+function applySeason(season, options = {}) {
+  state.season = { ...season, ...options };
+  renderSeasonBadge();
+  if (state.phase === "idle" && ["warmup", "part2", "part3"].includes(state.mode)) {
+    state.current = makeQuestion(MODE_META[state.mode].source);
+    renderMode();
+  }
+}
+
+function loadCachedSeason() {
+  try {
+    const cached = JSON.parse(localStorage.getItem(SEASON_CACHE_KEY));
+    if (cached?.part1?.length || cached?.part23?.length) {
+      applySeason({ ...cached, status: "ready", fromCache: true, error: "" });
+      return true;
+    }
+  } catch {
+    localStorage.removeItem(SEASON_CACHE_KEY);
+  }
+  return false;
+}
+
+async function loadSeasonBank() {
+  renderSeasonBadge();
+  loadCachedSeason();
+
+  try {
+    const response = await fetch(IELTSBRO_SEASON.api, { mode: "cors", credentials: "omit" });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const payload = await response.json();
+    if (payload.status !== 0 || !payload.content) throw new Error(payload.message || "题库接口返回异常");
+
+    const season = normalizeSeasonData(payload.content);
+    localStorage.setItem(SEASON_CACHE_KEY, JSON.stringify(season));
+    applySeason(season);
+    if (state.phase === "idle") setStatus(`已同步 ${IELTSBRO_SEASON.label}。`);
+  } catch (error) {
+    state.season.status = state.season.part1.length || state.season.part23.length ? "ready" : "error";
+    state.season.error = error instanceof Error ? error.message : String(error);
+    renderSeasonBadge();
+    if (state.phase === "idle" && state.season.status === "error") {
+      setStatus("暂时同步不到 IELTSbro 题库，已使用本地备用题。");
+    }
+  }
+}
+
+function pickPart1Question(topic) {
+  const questions = PART1_TOPIC_QUESTIONS[topic];
+  if (questions?.length) return randomItem(questions);
+
+  const subject = toSentenceTopic(topic);
+  return randomItem([
+    `Do you like ${subject}?`,
+    `How often do you think about ${subject}?`,
+    `Did you pay much attention to ${subject} when you were younger?`,
+    `What do people your age usually think about ${subject}?`
+  ]);
+}
+
+function getP23TopicInfo(topic) {
+  const key = cleanTopic(topic);
+  return P23_TOPIC_MAP[key] || {
+    cue: toSentenceTopic(key),
+    discussion: toSentenceTopic(key)
+  };
+}
+
+function makeSeasonQuestion(partKey, sourceOverride) {
+  if (state.season.status !== "ready") return null;
+
+  if (partKey === "part1" && state.season.part1.length) {
+    const topic = randomItem(state.season.part1);
+    return {
+      part: "Part 1",
+      q: pickPart1Question(topic.topic),
+      source: sourceOverride || "warmup",
+      seasonTopic: topic.topic,
+      seasonSource: IELTSBRO_SEASON.label,
+      seasonUpdatedAt: state.season.updatedAt,
+      questionPic: topic.questionPic
+    };
+  }
+
+  if ((partKey === "part2" || partKey === "part3") && state.season.part23.length) {
+    const topic = randomItem(state.season.part23);
+    const info = getP23TopicInfo(topic.topic);
+
+    if (partKey === "part2") {
+      return {
+        part: "Part 2",
+        q: `Describe ${info.cue}.`,
+        cues: randomItem(PART2_CUE_SETS),
+        source: sourceOverride || "part2",
+        seasonTopic: topic.topic,
+        seasonSource: IELTSBRO_SEASON.label,
+        seasonUpdatedAt: state.season.updatedAt,
+        questionPic: topic.questionPic
+      };
+    }
+
+    return {
+      part: "Part 3",
+      q: randomItem(PART3_TEMPLATES)(info.discussion),
+      source: sourceOverride || "part3",
+      seasonTopic: topic.topic,
+      seasonSource: IELTSBRO_SEASON.label,
+      seasonUpdatedAt: state.season.updatedAt,
+      questionPic: topic.questionPic
+    };
+  }
+
+  return null;
+}
+
+function makeFallbackQuickQuestion(partKey) {
+  if (partKey === "part2") return { ...randomItem(BANK.part2), source: "part2" };
+  if (partKey === "part3") return { ...randomItem(BANK.part3), source: "part3" };
+  return { ...randomItem(BANK.warmup), source: "warmup" };
+}
+
 function getTiming(item = state.current) {
+  if (state.mode === "warmup") {
+    return {
+      prep: clampNumber(els.quickPrepInput, 3, 0, 15),
+      speak: clampNumber(els.shortSpeakInput, QUICK_PART_META[state.quickPart]?.speak || 45, 20, 120)
+    };
+  }
+
   const source = item?.source || state.mode;
   if (source === "part2") return { prep: 60, speak: 120 };
   if (source === "part3") return { prep: 5, speak: 75 };
@@ -699,14 +1211,22 @@ function getModeLabel(mode) {
 }
 
 function makeQuestion(source) {
+  if (source === "warmup") {
+    const partKey = state.quickPart || "part1";
+    return makeSeasonQuestion(partKey, QUICK_PART_META[partKey]?.source) || makeFallbackQuickQuestion(partKey);
+  }
+
+  if (source === "part2") return makeSeasonQuestion("part2", "part2") || { ...randomItem(BANK.part2), source };
+  if (source === "part3") return makeSeasonQuestion("part3", "part3") || { ...randomItem(BANK.part3), source };
+
   return { ...randomItem(BANK[source]), source };
 }
 
 function buildMock() {
   return [
-    ...shuffled(BANK.warmup).slice(0, 4).map((item) => ({ ...item, source: "warmup" })),
-    { ...randomItem(BANK.part2), source: "part2" },
-    ...shuffled(BANK.part3).slice(0, 5).map((item) => ({ ...item, source: "part3" }))
+    ...Array.from({ length: 4 }, () => makeSeasonQuestion("part1", "warmup") || { ...randomItem(BANK.warmup), source: "warmup" }),
+    makeSeasonQuestion("part2", "part2") || { ...randomItem(BANK.part2), source: "part2" },
+    ...Array.from({ length: 5 }, () => makeSeasonQuestion("part3", "part3") || { ...randomItem(BANK.part3), source: "part3" })
   ];
 }
 
@@ -782,6 +1302,64 @@ function renderServerBadge() {
     return;
   }
   els.serverBadge.textContent = window.location.host;
+}
+
+function renderSeasonBadge() {
+  if (state.season.status === "ready") {
+    const count = state.season.part1.length + state.season.part23.length;
+    els.seasonBadge.textContent = state.season.fromCache ? `题库缓存 ${count} 题` : `2026题库 ${count} 题`;
+    els.seasonBadge.classList.remove("muted");
+    return;
+  }
+
+  if (state.season.status === "error") {
+    els.seasonBadge.textContent = "题库备用";
+    els.seasonBadge.classList.add("muted");
+    return;
+  }
+
+  els.seasonBadge.textContent = "题库同步中";
+  els.seasonBadge.classList.add("muted");
+}
+
+function renderQuickPartControl() {
+  els.quickPartControl.classList.toggle("hidden", state.mode !== "warmup");
+  els.quickPartTabs.forEach((button) => {
+    button.classList.toggle("active", button.dataset.quickPart === state.quickPart);
+  });
+}
+
+function renderTopicSource(shouldHide) {
+  els.topicSource.innerHTML = "";
+  const current = state.current || {};
+
+  const source = document.createElement("span");
+  if (current.seasonSource) {
+    const topic = shouldHide ? "题目已隐藏" : `话题：${current.seasonTopic}`;
+    const updated = current.seasonUpdatedAt ? ` · 更新：${current.seasonUpdatedAt}` : "";
+    source.textContent = `${current.seasonSource} · ${topic}${updated}`;
+  } else {
+    source.textContent = "本地备用题";
+  }
+  els.topicSource.append(source);
+
+  if (current.questionPic && !shouldHide) {
+    const cardLink = document.createElement("a");
+    cardLink.href = current.questionPic;
+    cardLink.target = "_blank";
+    cardLink.rel = "noopener";
+    cardLink.textContent = "查看题卡图";
+    els.topicSource.append(cardLink);
+  }
+
+  if (current.seasonSource) {
+    const pageLink = document.createElement("a");
+    pageLink.href = IELTSBRO_SEASON.page;
+    pageLink.target = "_blank";
+    pageLink.rel = "noopener";
+    pageLink.textContent = "来源页";
+    els.topicSource.append(pageLink);
+  }
 }
 
 function isLocalhostPage() {
@@ -924,6 +1502,8 @@ function renderMode() {
   els.strictBadge.textContent = els.strictToggle.checked ? "考场模式" : "普通模式";
   els.strictBadge.classList.toggle("muted", !els.strictToggle.checked);
   document.body.classList.toggle("strict", els.strictToggle.checked);
+  renderSeasonBadge();
+  renderQuickPartControl();
   renderMockStrip();
   renderQuestion();
   renderStems();
@@ -966,6 +1546,8 @@ function renderQuestion() {
   } else {
     els.cueList.classList.add("hidden");
   }
+
+  renderTopicSource(shouldHide);
 }
 
 function renderStems() {
@@ -1112,6 +1694,23 @@ function selectMode(mode) {
     state.current = makeQuestion(MODE_META[mode].source);
     setStatus("选一个模式，点击开始。");
   }
+  renderMode();
+}
+
+function selectQuickPart(part) {
+  if (!QUICK_PART_META[part]) return;
+  stopTimer();
+  stopRecording();
+  state.quickPart = part;
+  localStorage.setItem("ieltsQuickPart", part);
+  els.shortSpeakInput.value = QUICK_PART_META[part].speak;
+
+  if (state.mode === "warmup") {
+    state.phase = "idle";
+    state.current = makeQuestion("warmup");
+    setStatus(`3秒开口已切到 ${QUICK_PART_META[part].label} 随机题。`);
+  }
+
   renderMode();
 }
 
@@ -1288,9 +1887,9 @@ function startDrill() {
   state.phase = "prep";
   state.attempts += 1;
   state.daily.attempts += 1;
-  if (state.current.source === "warmup") state.daily.warmup += 1;
-  if (state.current.source === "part2") state.daily.part2 += 1;
-  if (state.current.source === "part3") state.daily.part3 += 1;
+  if (state.mode === "warmup") state.daily.warmup += 1;
+  else if (state.current.source === "part2") state.daily.part2 += 1;
+  else if (state.current.source === "part3") state.daily.part3 += 1;
   saveDaily();
   state.lastStartedAt = Date.now();
   state.recordingCounted = false;
@@ -1667,6 +2266,10 @@ function bindEvents() {
     tab.addEventListener("click", () => selectMode(tab.dataset.mode));
   });
 
+  els.quickPartTabs.forEach((tab) => {
+    tab.addEventListener("click", () => selectQuickPart(tab.dataset.quickPart));
+  });
+
   els.resetPlanBtn.addEventListener("click", () => {
     state.plan = {};
     savePlan();
@@ -1708,6 +2311,8 @@ function bindEvents() {
 }
 
 function init() {
+  if (!QUICK_PART_META[state.quickPart]) state.quickPart = "part1";
+  els.shortSpeakInput.value = QUICK_PART_META[state.quickPart].speak;
   state.current = makeQuestion("warmup");
   bindEvents();
   if ("speechSynthesis" in window) {
@@ -1724,6 +2329,7 @@ function init() {
   renderHistory();
   renderStats();
   renderMode();
+  loadSeasonBank();
 }
 
 init();

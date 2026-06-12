@@ -135,6 +135,54 @@ button:disabled {
   color: #fff;
 }
 
+.quick-part-control {
+  align-items: center;
+  background: var(--panel-strong);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  min-height: 54px;
+  padding: 9px 12px;
+}
+
+.quick-part-control.hidden {
+  display: none;
+}
+
+.quick-part-control > span {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.quick-part-tabs {
+  display: grid;
+  flex: 1;
+  gap: 7px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  max-width: 360px;
+}
+
+.quick-part-tab {
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 900;
+  min-height: 34px;
+  padding: 0 10px;
+}
+
+.quick-part-tab.active {
+  background: var(--teal);
+  border-color: var(--teal);
+  color: #fff;
+}
+
 .workspace {
   display: grid;
   gap: 14px;
@@ -450,6 +498,26 @@ button:disabled {
 .cue-list li {
   font-size: 18px;
   line-height: 1.35;
+}
+
+.topic-source {
+  align-items: center;
+  color: var(--muted);
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 12px;
+  font-weight: 800;
+  gap: 8px;
+  min-height: 20px;
+}
+
+.topic-source a {
+  color: var(--blue);
+  text-decoration: none;
+}
+
+.topic-source a:hover {
+  text-decoration: underline;
 }
 
 .timer-panel {
@@ -806,6 +874,16 @@ textarea {
   .surface-head {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .quick-part-control {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .quick-part-tabs {
+    max-width: none;
+    width: 100%;
   }
 }
 

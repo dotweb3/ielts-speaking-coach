@@ -15,6 +15,7 @@
         </div>
         <div class="topbar-status" aria-live="polite">
           <span id="serverBadge" class="status-pill">局域网页面</span>
+          <span id="seasonBadge" class="status-pill muted">题库同步中</span>
           <span id="micBadge" class="status-pill muted">麦克风未启用</span>
           <span id="strictBadge" class="status-pill muted">普通模式</span>
         </div>
@@ -86,6 +87,15 @@
             <div id="attemptTag" class="attempt-tag">Attempt 0</div>
           </div>
 
+          <div id="quickPartControl" class="quick-part-control" aria-label="3秒开口题型">
+            <span>随机范围</span>
+            <div class="quick-part-tabs">
+              <button class="quick-part-tab active" type="button" data-quick-part="part1">Part 1</button>
+              <button class="quick-part-tab" type="button" data-quick-part="part2">Part 2</button>
+              <button class="quick-part-tab" type="button" data-quick-part="part3">Part 3</button>
+            </div>
+          </div>
+
           <div class="stats-strip" aria-label="今日统计">
             <div class="stat-cell">
               <span>今日题数</span>
@@ -118,6 +128,7 @@
             </div>
             <p id="questionText" class="question-text"></p>
             <ul id="cueList" class="cue-list hidden"></ul>
+            <div id="topicSource" class="topic-source"></div>
           </article>
 
           <div class="timer-panel">
